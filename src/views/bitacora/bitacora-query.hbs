@@ -1,0 +1,177 @@
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title text-center">Filtros de búsqueda</h4>
+        <form class="form-inline mt-1 ml-4 mr-4 mb-1" action="/bitacora/retrieve" method="GET">
+            <input type="hidden" name="page" value=1>
+            <div class="row mx-auto mt-2">
+                <div class="form-group mx-sm-4">
+                    <div class="flex-column">
+                        <label>Fecha operación inicio</label>
+                        <input type="datetime-local" class="form-control" name="operationDateTimeIni" value="{{operationDateTimeIni}}">
+                    </div>
+                </div>
+                <div class="form-group mx-sm-4">
+                    <div class="flex-column">
+                        <label>Fecha operación fin</label>
+                        <input type="datetime-local" class="form-control" name="operationDateTimeEnd" value="{{operationDateTimeEnd}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row mx-auto mt-2">
+                <div class="form-group mx-sm-1">
+                    <div class="flex-column">
+                        <label>Log Type</label>
+                        <input type="text" class="form-control" name="logType" placeholder="Log Type" value="{{logType}}">
+                    </div>
+                </div>
+                <div class="form-group mx-sm-1">
+                    <div class="flex-column">
+                        <label>Operation ID</label>
+                        <input type="text" class="form-control" name="operationId" placeholder="Operation ID" value="{{operationId}}">
+                    </div>
+                </div>
+                <div class="form-group mx-sm-1">
+                    <div class="flex-column">
+                        <label>User ID</label>
+                        <input type="text" class="form-control" name="userId" placeholder="User ID" value="{{userId}}">
+                    </div>
+                </div>
+                <div class="form-group mx-sm-1">
+                    <div class="flex-column">
+                        <label>uuid</label>
+                        <input type="text" class="form-control" name="uuid" placeholder="uuid" value="{{uuid}}">
+                    </div>
+                </div>
+                <div class="form-group mx-sm-1">
+                    <div class="flex-column">
+                        <label>API</label>
+                        <input type="text" class="form-control" name="api" placeholder="API" value="{{api}}">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-2">Buscar</button>
+        </form>
+    </div>        
+</div>
+<div class="card mt-4">
+    <form class="form-inline mt-1 ml-4 mr-4 mb-1" action="/bitacora/retrieve" method="POST">
+        {{#if cellphoneLogDTOList}}
+            <input type="hidden" name="operationDateTimeIni" value="{{operationDateTimeIni}}">
+            <input type="hidden" name="operationDateTimeEnd" value="{{operationDateTimeEnd}}">
+            <input type="hidden" name="logType" value="{{logType}}">
+            <input type="hidden" name="operationId" value="{{operationId}}">
+            <input type="hidden" name="userId" value="{{userId}}">
+            <input type="hidden" name="uuid" value="{{uuid}}">
+            <input type="hidden" name="api" value="{{api}}">
+            <button type="submit" class="btn btn-block">Exportar CSV</button>
+        {{else}}
+            <button type="submit" class="btn btn-block" disabled>Exportar CSV</button>
+        {{/if}}
+    </form>
+</div>
+<div class="card">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col" class="text-nowrap">Log Type</th>
+                <th scope="col" class="text-nowrap">Operation ID</th>
+                <th scope="col" class="text-nowrap">Operation Date</th>
+                <th scope="col" class="text-nowrap">Operation Time</th>
+                <th scope="col" class="text-nowrap">Branch</th>
+                <th scope="col" class="text-nowrap">User ID</th>
+                <th scope="col" class="text-nowrap">Core Environment</th>
+                <th scope="col" class="text-nowrap">Generic Data</th>
+                <th scope="col" class="text-nowrap">Device ID</th>
+                <th scope="col" class="text-nowrap">uuid</th>
+                <th scope="col" class="text-nowrap">Http Status</th>
+                <th scope="col" class="text-nowrap">Error Code</th>
+                <th scope="col" class="text-nowrap">Namespace</th>
+                <th scope="col" class="text-nowrap">API</th>
+                <th scope="col" class="text-nowrap">Transaction</th>
+                <th scope="col" class="text-nowrap">App Version</th>
+                <th scope="col" class="text-nowrap">Device Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each cellphoneLogDTOList}}
+                    <tr>
+                    <td class="text-nowrap">{{ logType }}</td>
+                    <td class="text-nowrap">{{ operationId }}</td>
+                    <td class="text-nowrap">{{ operationDate }}</td>
+                    <td class="text-nowrap">{{ operationTime }}</td>
+                    <td class="text-nowrap">{{ branch }}</td>
+                    <td class="text-nowrap">{{ userId }}</td>
+                    <td class="text-nowrap">{{ coreEnvironment }}</td>
+                    <td class="text-nowrap">{{ genericData }}</td>
+                    <td class="text-nowrap">{{ deviceId }}</td>
+                    <td class="text-nowrap">{{ uuid }}</td>
+                    <td class="text-nowrap">{{ httpStatus }}</td>
+                    <td class="text-nowrap">{{ errorCode }}</td>
+                    <td class="text-nowrap">{{ namespace }}</td>
+                    <td class="text-nowrap">{{ api }}</td>
+                    <td class="text-nowrap">{{ textToJson transaction }}</td>
+                    <td class="text-nowrap">{{ appVersion }}</td>
+                    <td class="text-nowrap">{{ textToJson deviceInformation }}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        {{#if totalPages}}
+            <div class="mx-auto">
+                <ul class="pagination">
+                    <!-- FIRST PAGE -->
+                    {{#if (ifEquals page 1)}}
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">Primera página</a>
+                        </li>
+                    {{else}}
+                        <li class="page-item">
+                            <a href="/bitacora/retrieve/?page=1&operationDateTimeIni={{operationDateTimeIni}}&operationDateTimeEnd={{operationDateTimeEnd}}&logType={{logType}}&operationId={{operationId}}&userId={{userId}}&uuid={{uuid}}&api={{api}}" class="page-link">Primera página</a>
+                        </li>
+                    {{/if}}
+
+                    <!-- ITEMS  -->
+
+                    {{#each (getPageLeftBorder page) as |item|}}
+                        {{#if (ifEquals ../page item)}}
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">
+                                {{item}}
+                            </a>
+                        </li>
+                        {{else}}
+                        <li class="page-item">
+                            <a href="/bitacora/retrieve/?page={{item}}&operationDateTimeIni={{../operationDateTimeIni}}&operationDateTimeEnd={{../operationDateTimeEnd}}&logType={{../logType}}&operationId={{../operationId}}&userId={{../userId}}&uuid={{../uuid}}&api={{../api}}" class="page-link">
+                                {{item}}
+                            </a>
+                        </li>
+                        {{/if}}
+                    {{/each}}
+                    {{#each (getPageRightBorder page totalPages) as |item|}}
+                        <li class="page-item">
+                            <a href="/bitacora/retrieve/?page={{item}}&operationDateTimeIni={{../operationDateTimeIni}}&operationDateTimeEnd={{../operationDateTimeEnd}}&logType={{../logType}}&operationId={{../operationId}}&userId={{../userId}}&uuid={{../uuid}}&api={{../api}}" class="page-link">
+                                {{item}}
+                            </a>
+                        </li>
+                    {{/each}}
+
+                    <!-- LAST PAGE -->
+                    {{#if (ifEquals page totalPages)}}
+                        <li class="page-item disabled">
+                            <a href="#" class="page-link">Última página</a>
+                        </li>
+                    {{else}}
+                        <li class="page-item">
+                            <a href="/bitacora/retrieve/?page={{totalPages}}&operationDateTimeIni={{operationDateTimeIni}}&operationDateTimeEnd={{operationDateTimeEnd}}&logType={{logType}}&operationId={{operationId}}&userId={{userId}}&uuid={{uuid}}&api={{api}}" class="page-link">Última página</a>
+                        </li>
+                    {{/if}}
+                </ul>
+            </div>
+        {{/if}}
+    </div>
+</div>

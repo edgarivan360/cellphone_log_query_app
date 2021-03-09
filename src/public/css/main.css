@@ -1,0 +1,39 @@
+body{
+    background: #63abd4;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #d3d62b, #d0d310);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f1ef5d, #131b8b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.logo {
+    width: 30%;
+}
+
+label
+{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+input[type="text"]
+{
+    font-size: 12px;
+    height: 25px;
+}
+
+input[type="datetime-local"]
+{
+    font-size: 12px;
+    height: 25px;
+}
+
+th {
+    font-size: 12px;
+}
+
+td {
+    font-size: 12px;
+}
+
+li {
+    font-size: 12px;
+}
